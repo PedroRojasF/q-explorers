@@ -1,35 +1,280 @@
-# Qubitpacha
+# QubitPacha
 
-Aplicación educativa para estudiantes de secundaria que conecta los fundamentos de la computación cuántica con constelaciones, animales y sistemas de conocimiento andinos.
+Aplicación móvil educativa que acerca la computación cuántica a estudiantes de secundaria mediante una experiencia visual, interactiva y progresiva inspirada en constelaciones y elementos culturales andinos.
 
-## Recorridos
+El nombre combina **qubit** con *pacha*, palabra quechua asociada con mundo, tiempo y universo. El estudiante recorre constelaciones, completa misiones y construye intuiciones sobre bits, probabilidad, medición, superposición y circuitos cuánticos con la ayuda de **Kusi**, un colibrí curioso.
 
-- **Estudiante:** bienvenida, elección de guía, mapa de constelaciones, mundos, misiones interactivas, recompensas, diario y perfil.
-- **Profesor:** resumen de clases, progreso y estudiantes, asignación de misiones y recursos para trabajar dentro o fuera del aula.
+> **Nota cultural:** la identidad andina funciona como contexto visual y pedagógico. QubitPacha no afirma que los pueblos andinos conocieran la computación cuántica ni presenta analogías culturales como equivalencias científicas.
 
-El progreso de la sesión se mantiene en un contexto compartido: las respuestas correctas entregan XP, encienden estrellas y desbloquean la misión siguiente.
+## Problema y propuesta
 
-## Desarrollo
+Existe una brecha entre los conocimientos escolares de matemáticas, física y computación y la forma en que normalmente se presentan las tecnologías cuánticas. QubitPacha parte de ideas familiares —sistema binario, lógica, probabilidad, ondas e interferencia— y construye una ruta gradual hacia qubits, superposición, medición y circuitos.
+
+El objetivo no es almacenar la mayor cantidad de contenido, sino conseguir que una persona comprenda por primera vez una idea cuántica que antes parecía inaccesible.
+
+## Estado actual del prototipo
+
+El repositorio contiene una aplicación Expo navegable con dos recorridos:
+
+- **Estudiante:** portada, onboarding, selección de guía, mapa de seis mundos, detalle del Mundo 1, cuatro misiones, retroalimentación, recompensas, diario y perfil.
+- **Profesor:** resumen de clases, progreso general, lista de estudiantes, asignación de misiones y recursos pedagógicos.
+
+También incluye:
+
+- Estado global con Context y persistencia local mediante AsyncStorage.
+- XP, estrellas y desbloqueo secuencial de misiones.
+- Simulador local de uno y dos qubits en TypeScript.
+- Assets de Kusi, chakana, galaxia y constelaciones andinas.
+- Tipografías Lora y Nunito.
+- Soporte para Android, iOS y web mediante Expo.
+
+Los datos docentes son simulados. Todavía no existe autenticación, backend ni conexión activa con Qiskit.
+
+## Demo ideal de dos minutos
+
+La demostración central que guía el desarrollo es:
+
+1. Fiorella presenta el problema de un profesor que quiere enseñar cuántica y no sabe cómo comenzar.
+2. Se abre el mapa de constelaciones.
+3. Un estudiante entra en la misión de probabilidad.
+4. Predice qué ocurrirá al aplicar una puerta Hadamard.
+5. Ejecuta 100 mediciones (*shots*).
+6. Observa que los resultados individuales son inciertos, pero aparece un patrón cercano a 50/50.
+7. Responde una pregunta conceptual sobre superposición y medición.
+8. Obtiene una estrella para su constelación.
+9. El profesor ve el resultado y recibe una recomendación pedagógica.
+
+La guía detallada del pitch, tiempos, mensajes y criterios de éxito se encuentra en [docs/PITCH_DEMO.md](docs/PITCH_DEMO.md).
+
+## Empezar
+
+### Requisitos
+
+- Node.js 18 o superior.
+- npm.
+- Expo Go compatible con SDK 54 para probar en un dispositivo.
+
+### Instalación
 
 ```bash
+git clone https://github.com/PedroRojasF/q-explorers.git
+cd q-explorers
 npm install
-npm start
+npx expo start
 ```
 
-Para ejecutar en web:
+Desde la consola de Expo:
+
+- Escanea el QR con Expo Go.
+- Pulsa `a` para Android.
+- Pulsa `i` para iOS en un entorno compatible.
+- Pulsa `w` para web.
+
+También puedes usar:
 
 ```bash
+npm run android
+npm run ios
 npm run web
 ```
 
-También están disponibles `npm run android` y `npm run ios` para los entornos compatibles.
+## Flujo del estudiante
 
-## Estructura principal
+### Onboarding
 
-- `app/`: rutas y pantallas de Expo Router.
-- `components/JourneyUI.tsx`: sistema visual compartido.
-- `data/journey.ts`: mundos, misiones, guías y datos docentes.
-- `lib/JourneyContext.tsx`: rol, guía y progreso de la sesión.
-- `lib/quantum.ts`: simulador cuántico conservado como base para futuros retos.
+1. Selección de rol: estudiante, profesor o invitado.
+2. Bienvenida a QubitPacha.
+3. Selección de guía: Kusi, Sami o Inti.
+4. Entrada al mapa de constelaciones.
 
-Construido con Expo SDK 54, React Native y TypeScript.
+### Mapa y progreso
+
+El mapa muestra seis mundos:
+
+| Mundo | Tema | Estado |
+|---|---|---|
+| 1. Código secreto | Bits y quipus | Funcional |
+| 2. Azar y probabilidad | Patrones y mediciones | Diseñado para la siguiente iteración |
+| 3. Dos caminos | Superposición | Visible, pendiente |
+| 4. Lazos invisibles | Entrelazamiento | Visible, pendiente |
+| 5. La mirada cambia todo | Medición | Visible, pendiente |
+| 6. Senderos cuánticos | Algoritmos | Visible, pendiente |
+
+### Mundo 1 — Código secreto
+
+- **El quipu digital:** relaciona representación y almacenamiento de información.
+- **Bits en acción:** introduce combinaciones binarias.
+- **Contar en binario:** practica secuencias y valor posicional.
+- **Reto final:** conecta códigos ancestrales y digitales sin equipararlos históricamente.
+
+Cada respuesta correcta entrega 10 XP, enciende una estrella y desbloquea la misión siguiente. Las misiones pueden repetirse.
+
+## Flujo del profesor
+
+El modo profesor utiliza datos locales para demostrar el valor pedagógico:
+
+- Resumen de clases, estudiantes y misiones activas.
+- Progreso promedio por clase.
+- Misiones con mayor dificultad.
+- Lista de estudiantes con XP y porcentaje de avance.
+- Formulario para asignar misiones.
+- Guías docentes y actividades para trabajar sin conexión.
+
+La evolución prevista añade recomendaciones basadas en evidencia. Por ejemplo, si un estudiante interpreta un resultado 50/50 como una alternancia exacta, el profesor recibiría la sugerencia de repetir el experimento con 10, 100 y 1000 shots y comparar frecuencia observada con probabilidad teórica.
+
+## Arquitectura actual
+
+```text
+q-explorers/
+├── app/                         # Pantallas y rutas de Expo Router
+│   ├── (tabs)/index.tsx         # Portada y selección de rol
+│   ├── onboarding.tsx
+│   ├── guide.tsx
+│   ├── map.tsx
+│   ├── world/[id].tsx
+│   ├── mission/[id].tsx
+│   ├── reward.tsx
+│   ├── missions.tsx
+│   ├── journal.tsx
+│   ├── profile.tsx
+│   ├── teacher.tsx
+│   ├── class/[id].tsx
+│   ├── assign.tsx
+│   └── resources.tsx
+├── assets/qubitpacha/           # Logo, Kusi, galaxia y constelaciones
+├── components/JourneyUI.tsx     # Componentes visuales compartidos
+├── constants/Colors.ts          # Paleta semántica
+├── data/journey.ts              # Mundos, misiones y datos docentes
+├── data/lessons.ts              # Contenido cuántico previo
+├── lib/JourneyContext.tsx       # Rol, guía, progreso y persistencia
+├── lib/quantum.ts               # Simulador local de 1–2 qubits
+├── app.json
+├── package.json
+└── tsconfig.json
+```
+
+## Arquitectura científica objetivo
+
+La aplicación móvil y el motor científico se mantienen separados:
+
+```mermaid
+flowchart LR
+    A["Aplicación Expo"] -->|"circuito, shots, parámetros"| B["API REST"]
+    B --> C["Python + Qiskit"]
+    C --> D["Qiskit Aer"]
+    D --> C
+    C -->|"conteos y probabilidades"| B
+    B -->|"JSON"| A
+```
+
+Tecnologías previstas para el motor científico:
+
+- **Python:** lógica y servicio backend.
+- **Qiskit:** construcción de circuitos.
+- **Qiskit Aer:** simulación por shots.
+- **NumPy:** cálculos de ondas e interferencia.
+- **Matplotlib:** validación de histogramas y visualizaciones durante el prototipado.
+- **ipywidgets:** pruebas interactivas en Google Colab o Jupyter.
+
+Mientras no exista la API, `lib/quantum.ts` permite ejecutar demostraciones educativas pequeñas completamente en el dispositivo.
+
+## Contrato REST propuesto
+
+Ejemplo de solicitud para una moneda cuántica:
+
+```http
+POST /api/v1/simulations/hadamard
+Content-Type: application/json
+
+{
+  "shots": 100,
+  "initialState": "0"
+}
+```
+
+Respuesta esperada:
+
+```json
+{
+  "circuit": "H q[0]; measure q[0]",
+  "shots": 100,
+  "counts": { "0": 48, "1": 52 },
+  "probabilities": { "0": 0.48, "1": 0.52 }
+}
+```
+
+Los valores son resultados experimentales y no deben codificarse como una alternancia exacta.
+
+## Identidad visual
+
+La interfaz evita morados, rosas y estética cyberpunk. Utiliza:
+
+- Cielo azul petróleo para mapas, mundos y recompensas.
+- Crema cálido para lectura, ejercicios y paneles docentes.
+- Naranja solar, turquesa lago y dorado maíz como acentos.
+- Lora para títulos y Nunito para interfaz.
+- Chakana, quipu y constelaciones como motivos usados con moderación.
+
+Los tokens principales viven en `constants/Colors.ts`.
+
+## Estado global y persistencia
+
+`lib/JourneyContext.tsx` mantiene:
+
+- Rol seleccionado.
+- Guía elegida.
+- Misiones completadas.
+- XP y estrellas derivados del progreso.
+- Resultado experimental futuro.
+
+El estado se guarda en AsyncStorage bajo el namespace `@qubitpacha/journey-v1` y se restaura al abrir la aplicación.
+
+## Accesibilidad y rendimiento
+
+- Objetivos táctiles principales de al menos 44 px.
+- Contraste alto entre crema y azul nocturno.
+- Estados acompañados por texto o iconos, no solo color.
+- Assets locales para funcionamiento predecible.
+- Animaciones y simulaciones pequeñas pensadas para dispositivos Android de gama media.
+
+## Verificación
+
+```bash
+npx tsc --noEmit
+npx expo-doctor
+```
+
+Antes de publicar cambios, ambas verificaciones deben terminar sin errores.
+
+## Trabajo en equipo
+
+Flujo recomendado:
+
+```bash
+git pull
+git switch -c feat/nombre-corto
+# cambios y pruebas
+git commit -m "feat: descripción breve"
+git push -u origin feat/nombre-corto
+```
+
+- Una funcionalidad por rama.
+- Commits descriptivos.
+- Pull requests pequeños y revisables.
+- No mezclar cambios de contenido, interfaz y backend cuando puedan revisarse por separado.
+
+## Hoja de ruta
+
+- Completar la misión de Hadamard con 10, 100 y 1000 shots.
+- Añadir el reporte docente y las recomendaciones pedagógicas.
+- Completar los mundos 2 a 6.
+- Crear API REST con Python, Qiskit y Qiskit Aer.
+- Sincronizar progreso entre dispositivos.
+- Añadir autenticación y separación real por clases.
+- Ampliar accesibilidad y pruebas automatizadas.
+- Explorar localización bilingüe español/quechua con revisión cultural.
+
+## Licencia y recursos
+
+Antes de distribuir públicamente, el equipo debe definir una licencia para el código y documentar la procedencia/licencia de cada asset visual. Lora y Nunito se distribuyen bajo SIL Open Font License.
+
