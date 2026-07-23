@@ -1,74 +1,35 @@
-# Quantika Mobile
+# Qubitpacha
 
-App en React Native + Expo para introducir la computación cuántica a estudiantes de secundaria.
+Aplicación educativa para estudiantes de secundaria que conecta los fundamentos de la computación cuántica con constelaciones, animales y sistemas de conocimiento andinos.
 
-## Empezar
+## Recorridos
+
+- **Estudiante:** bienvenida, elección de guía, mapa de constelaciones, mundos, misiones interactivas, recompensas, diario y perfil.
+- **Profesor:** resumen de clases, progreso y estudiantes, asignación de misiones y recursos para trabajar dentro o fuera del aula.
+
+El progreso de la sesión se mantiene en un contexto compartido: las respuestas correctas entregan XP, encienden estrellas y desbloquean la misión siguiente.
+
+## Desarrollo
 
 ```bash
-cd mobile
 npm install
-npx expo start
+npm start
 ```
 
-Escanea el QR con la app **Expo Go** (Android/iOS) o pulsa `w` para abrir en el navegador.
+Para ejecutar en web:
 
-## Estructura
-
-```
-mobile/
-├── app/                    # Rutas con expo-router (file-based)
-│   ├── _layout.tsx         # Stack raíz
-│   ├── (tabs)/             # Tabs inferiores
-│   │   ├── _layout.tsx
-│   │   ├── index.tsx       # Inicio
-│   │   ├── lessons.tsx     # Índice de lecciones
-│   │   ├── simulator.tsx   # Simulador 1-2 qubits
-│   │   └── about.tsx
-│   └── lesson/[id].tsx     # Detalle de lección + laboratorio
-├── components/             # UI compartido
-│   ├── Screen.tsx
-│   ├── ProbabilityBar.tsx
-│   └── GateButton.tsx
-├── lib/
-│   └── quantum.ts          # Simulador de 1-2 qubits (sin dependencias)
-├── data/
-│   └── lessons.ts          # Contenido educativo
-├── constants/
-│   └── Colors.ts           # Paleta
-├── app.json                # Configuración Expo
-├── package.json
-└── tsconfig.json
+```bash
+npm run web
 ```
 
-## Cómo añadir una lección
+También están disponibles `npm run android` y `npm run ios` para los entornos compatibles.
 
-Edita `data/lessons.ts` y añade un objeto al array `lessons`:
+## Estructura principal
 
-```ts
-{
-  id: 'mi-leccion',
-  title: 'Título corto',
-  emoji: '🔮',
-  summary: 'Una frase que enganche.',
-  readMinutes: 3,
-  body: 'Texto en markdown básico (**negrita**, líneas, • viñetas).',
-  tryIt: [
-    { gate: 'H', description: 'Aplica H sobre |0⟩.' },
-  ],
-}
-```
+- `app/`: rutas y pantallas de Expo Router.
+- `components/JourneyUI.tsx`: sistema visual compartido.
+- `data/journey.ts`: mundos, misiones, guías y datos docentes.
+- `lib/JourneyContext.tsx`: rol, guía y progreso de la sesión.
+- `lib/quantum.ts`: simulador cuántico conservado como base para futuros retos.
 
-`gate` puede ser `'X' | 'H' | 'Z' | 'S' | 'T' | 'I' | 'CNOT'`. Si usas `CNOT`, la lección se abrirá con 2 qubits automáticamente.
-
-## Notas técnicas
-
-- **Sin dependencias cuánticas.** El simulador está en `lib/quantum.ts` con aritmética de complejos manual. 1 o 2 qubits; suficiente para intuición.
-- **Sin Tailwind, sin librerías UI.** `StyleSheet` de React Native y paleta propia en `constants/Colors.ts`.
-- **Modo oscuro por defecto** con paleta de alto contraste.
-
-## Pendientes (cuando la base esté validada)
-
-- Marcador de progreso por lección (`AsyncStorage`).
-- Más qubits (sparse vector o cambio a `dwave-qiskit`/`cirq` JS).
-- Visualización de la esfera de Bloch con `react-native-svg`.
-- Cuenta atrás / quiz por lección.
+Construido con Expo SDK 54, React Native y TypeScript.
