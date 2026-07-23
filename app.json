@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Quantika",
+    "slug": "quantika",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "quantika",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0B1A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.quantika.app"
+    },
+    "android": {
+      "package": "com.quantika.app"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
