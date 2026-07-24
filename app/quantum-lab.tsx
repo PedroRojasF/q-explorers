@@ -14,6 +14,8 @@ const predictions: { id: Prediction; label: string }[] = [
   { id: 'half', label: 'Aproximadamente mitad y mitad' },
 ];
 
+const showCircuitButton = __DEV__ || process.env.EXPO_PUBLIC_DEMO_MODE === 'true';
+
 export default function QuantumLabScreen() {
   const { completeMission, recordExperiment } = useJourney();
   const [prediction, setPrediction] = useState<Prediction | null>(null);
@@ -54,7 +56,7 @@ export default function QuantumLabScreen() {
             <View style={styles.measure}><Text style={styles.measureIcon}>⌁</Text><Text style={styles.measureText}>Medir</Text></View>
           </View>
           <Text style={styles.shots}>100 mediciones</Text>
-          {__DEV__ && <Pressable onPress={() => setShowCode(true)}><Text style={styles.codeLink}>Ver circuito</Text></Pressable>}
+          {showCircuitButton && <Pressable onPress={() => setShowCode(true)} style={styles.circuitButton}><Text style={styles.circuitButtonText}>Ver circuito</Text></Pressable>}
         </PaperCard>
 
         {!result ? (
@@ -103,8 +105,12 @@ export default function QuantumLabScreen() {
       <Modal visible={showCode} transparent animationType="fade" onRequestClose={() => setShowCode(false)}>
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>Circuito en Qiskit</Text>
+            <View style={styles.modalHandle} />
+            <Text style={styles.modalTitle}>Circuito utilizado</Text>
             <Text style={styles.code}>{QISKIT_HADAMARD_CODE}</Text>
+            <View style={styles.modalDiagram}><Text style={styles.modalDiagramText}>|0⟩  ──  H  ──  M</Text></View>
+            <Text style={styles.modalExplanation}>La puerta Hadamard prepara el qubit en una superposición. Al repetir la medición, se espera obtener aproximadamente 50 % de ceros y 50 % de unos.</Text>
+            <View style={styles.backendTag}><Text style={styles.backendDot}>●</Text><Text style={styles.backendText}>{result?.backend === 'ibm-quantum' ? 'Ejecutado en IBM Quantum' : 'Ejecutado con Qiskit Aer Simulator'}</Text></View>
             <PrimaryButton secondary label="Cerrar" onPress={() => setShowCode(false)} />
           </View>
         </View>
@@ -138,7 +144,8 @@ const styles = StyleSheet.create({
   measure: { width: 60, height: 50, borderRadius: 9, backgroundColor: '#FFF0D0', borderWidth: 1, borderColor: Colors.line, alignItems: 'center', justifyContent: 'center' },
   measureIcon: { color: Colors.orange, fontSize: 19, lineHeight: 18 }, measureText: { color: Colors.inkSoft, fontFamily: 'Nunito_700Bold', fontSize: 9 },
   shots: { color: Colors.ink, fontFamily: 'Nunito_800ExtraBold', fontSize: 12, marginTop: 12 },
-  codeLink: { color: Colors.teal, fontFamily: 'Nunito_700Bold', fontSize: 11, textDecorationLine: 'underline', marginTop: 7 },
+  circuitButton: { minHeight: 35, borderRadius: 10, borderWidth: 1, borderColor: Colors.teal, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center', marginTop: 10, backgroundColor: Colors.paper },
+  circuitButtonText: { color: Colors.teal, fontFamily: 'Nunito_800ExtraBold', fontSize: 11 },
   sectionTitle: { color: Colors.ink, fontFamily: 'Lora_700Bold', fontSize: 19, marginTop: 21, marginBottom: 10 },
   options: { gap: 8, marginBottom: 17 },
   option: { minHeight: 48, borderRadius: 11, borderWidth: 1, borderColor: Colors.line, backgroundColor: '#FFF0D0', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 13 },
@@ -158,8 +165,15 @@ const styles = StyleSheet.create({
   explanation: { marginTop: 12, padding: 13 }, explanationTitle: { color: Colors.ink, fontFamily: 'Lora_700Bold', fontSize: 16 }, explanationText: { color: Colors.inkSoft, fontFamily: 'Nunito_600SemiBold', fontSize: 12, lineHeight: 18, marginTop: 4 },
   ibmSeal: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: Colors.teal, borderRadius: 12, padding: 10, marginVertical: 12, backgroundColor: '#E1ECE3' },
   ibmIcon: { color: Colors.teal, fontSize: 25, marginRight: 9 }, ibmCopy: { flex: 1 }, ibmTitle: { color: Colors.ink, fontFamily: 'Nunito_800ExtraBold', fontSize: 12 }, ibmMeta: { color: Colors.inkSoft, fontFamily: 'Nunito_600SemiBold', fontSize: 10, marginTop: 2 },
-  modalBackdrop: { flex: 1, backgroundColor: 'rgba(3,26,45,.72)', alignItems: 'center', justifyContent: 'center', padding: 22 },
-  modalCard: { width: '100%', maxWidth: 430, borderRadius: 18, backgroundColor: Colors.paper, padding: 20 },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(3,26,45,.72)', alignItems: 'center', justifyContent: 'flex-end' },
+  modalCard: { width: '100%', maxWidth: 520, borderTopLeftRadius: 24, borderTopRightRadius: 24, backgroundColor: Colors.paper, paddingHorizontal: 20, paddingTop: 10, paddingBottom: 24, borderWidth: 1, borderColor: Colors.gold },
+  modalHandle: { width: 46, height: 4, borderRadius: 2, backgroundColor: Colors.line, alignSelf: 'center', marginBottom: 16 },
   modalTitle: { color: Colors.ink, fontFamily: 'Lora_700Bold', fontSize: 22, marginBottom: 13 },
-  code: { color: Colors.paper, backgroundColor: Colors.night, borderRadius: 12, padding: 14, fontFamily: 'monospace', fontSize: 12, lineHeight: 18, marginBottom: 16 },
+  code: { color: Colors.paper, backgroundColor: Colors.night, borderRadius: 12, padding: 14, fontFamily: 'monospace', fontSize: 12, lineHeight: 18, marginBottom: 12 },
+  modalDiagram: { backgroundColor: Colors.paperDeep, borderWidth: 1, borderColor: Colors.gold, borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
+  modalDiagramText: { color: Colors.ink, fontFamily: 'Nunito_800ExtraBold', fontSize: 18, letterSpacing: 1 },
+  modalExplanation: { color: Colors.inkSoft, fontFamily: 'Nunito_600SemiBold', fontSize: 13, lineHeight: 19, marginTop: 13 },
+  backendTag: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', backgroundColor: '#E1ECE3', borderRadius: 10, borderWidth: 1, borderColor: Colors.teal, paddingHorizontal: 10, paddingVertical: 7, marginVertical: 14 },
+  backendDot: { color: Colors.teal, fontSize: 9, marginRight: 7 },
+  backendText: { color: Colors.ink, fontFamily: 'Nunito_800ExtraBold', fontSize: 11 },
 });

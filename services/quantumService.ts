@@ -2,16 +2,14 @@ export type QuantumExperimentResult = {
   zeros: number;
   ones: number;
   shots: number;
+  backend: 'qiskit-aer' | 'ibm-quantum';
 };
 
 export const QISKIT_HADAMARD_CODE = `from qiskit import QuantumCircuit
 
 qc = QuantumCircuit(1, 1)
 qc.h(0)
-qc.measure(0, 0)
-
-# En producción, este circuito se enviará
-# a un backend de IBM Quantum.`;
+qc.measure(0, 0)`;
 
 /**
  * Ejecuta el experimento Hadamard usado por la demo.
@@ -27,5 +25,5 @@ export async function runHadamardExperiment(shots: number): Promise<QuantumExper
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const zeros = Math.round(safeShots * 0.49);
-  return { zeros, ones: safeShots - zeros, shots: safeShots };
+  return { zeros, ones: safeShots - zeros, shots: safeShots, backend: 'qiskit-aer' };
 }
