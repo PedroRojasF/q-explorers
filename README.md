@@ -78,6 +78,35 @@ npm run ios
 npm run web
 ```
 
+## Despliegue web con EAS Hosting
+
+El proyecto utiliza un export web de tipo SPA (`expo.web.output: single`) y contiene un workflow en `.eas/workflows/deploy-web.yml` para publicar automáticamente cada push a `main` una vez que el repositorio esté vinculado con EAS.
+
+### Primer despliegue
+
+```bash
+npx eas-cli@latest login
+npx eas-cli@latest init
+npm run deploy:web
+```
+
+El primer despliegue permite elegir el subdominio de preview y vincula la aplicación con un proyecto de Expo. `eas init` añadirá automáticamente `expo.extra.eas.projectId` a `app.json`.
+
+### Publicar en producción
+
+```bash
+npm run deploy:web:prod
+```
+
+### Probar el bundle de producción localmente
+
+```bash
+npm run export:web
+npm run serve:web
+```
+
+No agregues manualmente un `projectId`: debe generarlo EAS para la cuenta propietaria del proyecto.
+
 ## Flujo del estudiante
 
 ### Onboarding
@@ -176,7 +205,16 @@ Tecnologías previstas para el motor científico:
 - **Matplotlib:** validación de histogramas y visualizaciones durante el prototipado.
 - **ipywidgets:** pruebas interactivas en Google Colab o Jupyter.
 
-Mientras no exista la API, `lib/quantum.ts` permite ejecutar demostraciones educativas pequeñas completamente en el dispositivo.
+Mientras no exista la API, `services/quantumService.ts` conserva el contrato `runHadamardExperiment(shots)` y entrega un resultado local estable para la demo. La interfaz identifica este resultado como **modo demo** y no afirma que provenga de hardware remoto. Al conectar el backend, basta con reemplazar la implementación del servicio sin modificar las pantallas del laboratorio.
+
+El flujo implementado conecta la misión **Bits en acción** con:
+
+1. La formulación de una hipótesis sobre la puerta Hadamard.
+2. La ejecución de 100 mediciones.
+3. La comparación visual de resultados 0 y 1.
+4. Una explicación conceptual de superposición y medición.
+5. La insignia **Primer Experimento Cuántico**.
+6. El reporte y la recomendación pedagógica en el panel docente.
 
 ## Contrato REST propuesto
 
@@ -203,7 +241,7 @@ Respuesta esperada:
 }
 ```
 
-Los valores son resultados experimentales y no deben codificarse como una alternancia exacta.
+En una integración real, los valores variarán entre ejecuciones. El resultado fijo de la demo local existe únicamente para garantizar una presentación reproducible sin conexión.
 
 ## Identidad visual
 
@@ -265,8 +303,9 @@ git push -u origin feat/nombre-corto
 
 ## Hoja de ruta
 
-- Completar la misión de Hadamard con 10, 100 y 1000 shots.
-- Añadir el reporte docente y las recomendaciones pedagógicas.
+- Conectar `quantumService` con una API REST de Qiskit e IBM Quantum.
+- Ampliar la misión de Hadamard con 10, 100 y 1000 shots.
+- Sustituir las métricas docentes de demostración por datos persistentes por clase.
 - Completar los mundos 2 a 6.
 - Crear API REST con Python, Qiskit y Qiskit Aer.
 - Sincronizar progreso entre dispositivos.
@@ -277,4 +316,3 @@ git push -u origin feat/nombre-corto
 ## Licencia y recursos
 
 Antes de distribuir públicamente, el equipo debe definir una licencia para el código y documentar la procedencia/licencia de cada asset visual. Lora y Nunito se distribuyen bajo SIL Open Font License.
-

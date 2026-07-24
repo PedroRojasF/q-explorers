@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Qubitpacha",
+    "name": "QubitPacha",
     "slug": "qubitpacha",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -13,17 +13,25 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.quantika.app"
+      "bundleIdentifier": "com.pedrorojasf.qubitpacha"
     },
     "android": {
-      "package": "com.quantika.app"
+      "package": "com.pedrorojasf.qubitpacha"
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "output": "single"
     },
     "plugins": [
       "expo-router",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a66fd90a-c4d4-4ffc-85a1-392c48c7c121"
+      }
+    },
+    "owner": "pedrorojasf24"
   }
 }

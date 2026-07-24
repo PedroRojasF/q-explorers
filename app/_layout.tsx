@@ -15,8 +15,8 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right', contentStyle: { backgroundColor: Colors.paper } }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="mission/[id]" options={{ animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="probability" options={{ animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="insight" options={{ animation: 'slide_from_right' }} />
+        <Stack.Screen name="quantum-invite" options={{ animation: 'slide_from_bottom' }} />
+        <Stack.Screen name="quantum-lab" options={{ animation: 'slide_from_right' }} />
         <Stack.Screen name="reward" options={{ animation: 'fade' }} />
       </Stack>
     </JourneyProvider>

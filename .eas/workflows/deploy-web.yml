@@ -1,0 +1,13 @@
+name: Deploy QubitPacha web
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy_web:
+    name: Deploy production website
+    type: deploy
+    environment: production
+    params:
+      prod: true
