@@ -5,6 +5,7 @@ dist/
 web-build/
 *.log
 .env*
+!.env.example
 .env.local
 android/
 ios/

@@ -18,7 +18,13 @@ export default function MissionScreen() {
     setChecked(true);
     if (selected === mission.answer) completeMission(mission.id);
   };
-  const next = () => router.replace({ pathname: '/reward', params: { id: mission.id, correct: correct ? '1' : '0' } });
+  const next = () => {
+    if (mission.id === 'bits-accion') {
+      router.replace('/quantum-invite');
+      return;
+    }
+    router.replace({ pathname: '/reward', params: { id: mission.id, correct: correct ? '1' : '0' } });
+  };
 
   return (
     <JourneyScreen scroll={false}>
@@ -34,7 +40,7 @@ export default function MissionScreen() {
           return <Pressable key={option} disabled={checked} onPress={() => setSelected(index)} style={[styles.option, stateStyle]}><Text style={styles.letter}>{String.fromCharCode(65 + index)}.</Text><Text style={styles.optionText}>{option}</Text>{checked && index === mission.answer && <Text style={styles.mark}>✓</Text>}</Pressable>;
         })}</View>
         {checked && <View style={[styles.feedback, correct ? styles.feedbackGood : styles.feedbackBad]}><Text style={styles.feedbackTitle}>{correct ? '¡Correcto!' : 'Casi, explorador'}</Text><Text style={styles.feedbackText}>{correct ? '+10 XP · Encendiste una estrella' : 'Observa las pistas e inténtalo de nuevo.'}</Text></View>}
-        <PrimaryButton secondary={checked} disabled={selected === null} label={checked ? (correct ? 'Ver recompensa' : 'Reintentar') : 'Comprobar'} onPress={checked ? (correct ? next : () => { setChecked(false); setSelected(null); }) : submit} />
+        <PrimaryButton secondary={checked} disabled={selected === null} label={checked ? (correct ? (mission.id === 'bits-accion' ? 'Continuar' : 'Ver recompensa') : 'Reintentar') : 'Comprobar'} onPress={checked ? (correct ? next : () => { setChecked(false); setSelected(null); }) : submit} />
       </View>
     </JourneyScreen>
   );
