@@ -207,6 +207,8 @@ Tecnologías previstas para el motor científico:
 
 Mientras no exista la API, `services/quantumService.ts` conserva el contrato `runHadamardExperiment(shots)` y entrega un resultado local estable para la demo. La interfaz identifica este resultado como **modo demo** y no afirma que provenga de hardware remoto. Al conectar el backend, basta con reemplazar la implementación del servicio sin modificar las pantallas del laboratorio.
 
+Para habilitar las herramientas visibles de presentación, copia `.env.example` a `.env.local` y conserva `EXPO_PUBLIC_DEMO_MODE=true`. Los archivos `.env` reales no se versionan; en EAS esta variable se configura como variable pública por entorno.
+
 El flujo implementado conecta la misión **Bits en acción** con:
 
 1. La formulación de una hipótesis sobre la puerta Hadamard.

@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "scheme": "qubitpacha",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "resizeMode": "contain",
-      "backgroundColor": "#041A2D"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pedrorojasf.qubitpacha"
@@ -24,7 +19,9 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-asset",
+      "expo-status-bar"
     ],
     "extra": {
       "router": {},
