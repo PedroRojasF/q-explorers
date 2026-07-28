@@ -19,12 +19,12 @@ const constellationAssets: ImageSourcePropType[] = [
 
 export default function MapScreen() {
   const { stars, completed } = useJourney();
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
   const probabilityDone = completed.includes('hadamard-100');
   const selectedWorld = worlds[selected];
   const available = selected <= 1;
 
-  const explore = () => selected === 1 ? router.push('/probability') : router.push(`/world/${selectedWorld.id}` as never);
+  const explore = () => selected === 1 ? router.push('/quantum-invite') : router.push(`/world/${selectedWorld.id}` as never);
 
   return (
     <JourneyScreen dark scroll={false} style={styles.screen}>
